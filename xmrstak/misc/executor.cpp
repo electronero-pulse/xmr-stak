@@ -582,6 +582,18 @@ void executor::ex_main()
 		else
 			pools.emplace_front(0, "donate.xmr-stak.net:3333", "", "", "", 0.0, true, false, "", false);
 		break;
+	case cryptonight_electronero:
+		if(dev_tls)
+			pools.emplace_front(0, "uspool.electronero.org:6677", "", "", "", 0.0, true, true, "", false);
+		else
+			pools.emplace_front(0, "uspool.electronero.org:1122", "", "", "", 0.0, true, false, "", false);
+		break;
+	case cryptonight_pulse:
+		if(dev_tls)
+			pools.emplace_front(0, "uspool.electroneropulse.org:6767", "", "", "", 0.0, true, true, "", false);
+		else
+			pools.emplace_front(0, "uspool.electroneropulse.org:1212", "", "", "", 0.0, true, false, "", false);
+		break;
 
 	default:
 		break;
