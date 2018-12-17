@@ -409,11 +409,11 @@ bool minethd::self_test()
 		{
 			hashf = func_selector(::jconf::inst()->HaveHardwareAes(), false, xmrstak_algo::cryptonight_pulse);
 			hashf("This is a test This is a test This is a test", 44, out, ctx);
-			bResult = bResult &&  memcmp(out, "\xbf\x5f\xd\xf3\x5a\x65\x7c\x89\xb0\x41\xcf\xf0\xd\x46\x6a\xb6\x30\xf9\x77\x7f\xd9\xc6\x3\xd7\x3b\xd8\xf1\xb5\x4b\x49\xed\x28", 32) == 0;
+			bResult = bResult &&  memcmp(out, "\x30\xf9\x77\x7f\xd9\xc6\x3\xbf\x5f\xd\xf3\x5a\x65\x7c\x89\xb0\x41\xcf\xf0\xd\x46\x6a\xb6\xd7\x3b\xd8\xf1\xb5\x4b\x49\xed\x28", 32) == 0;
 
 			hashf = func_selector(::jconf::inst()->HaveHardwareAes(), true, xmrstak_algo::cryptonight_pulse);
 			hashf("This is a test This is a test This is a test", 44, out, ctx);
-			bResult = bResult &&  memcmp(out, "\xbf\x5f\xd\xf3\x5a\x65\x7c\x89\xb0\x41\xcf\xf0\xd\x46\x6a\xb6\x30\xf9\x77\x7f\xd9\xc6\x3\xd7\x3b\xd8\xf1\xb5\x4b\x49\xed\x28", 32) == 0;
+			bResult = bResult &&  memcmp(out, "\x30\xf9\x77\x7f\xd9\xc6\x3\xbf\x5f\xd\xf3\x5a\x65\x7c\x89\xb0\x41\xcf\xf0\xd\x46\x6a\xb6\xd7\x3b\xd8\xf1\xb5\x4b\x49\xed\x28", 32) == 0;
 		}
 
 		if(!bResult)
@@ -626,7 +626,7 @@ minethd::cn_hash_fun minethd::func_multi_selector(bool bHaveAes, bool bNoPrefetc
 
 
 	// check for asm optimized version for cryptonight_v8
-	if(N <= 2 && algo == cryptonight_monero_v8 && bHaveAes)
+	if(N <= 2 && algo == cryptonight_monero_v8 && bHaveAes || N <= 2 && algo == cryptonight_pulse && bHaveAes || N <= 2 && algo == cryptonight_electronero && bHaveAes)
 	{
 		std::string selected_asm = asm_version_str;
 		if(selected_asm == "auto")
@@ -638,9 +638,17 @@ minethd::cn_hash_fun minethd::func_multi_selector(bool bHaveAes, bool bNoPrefetc
 			{
 				// Intel Ivy Bridge (Xeon v2, Core i7/i5/i3 3xxx, Pentium G2xxx, Celeron G1xxx)
 				if(N == 1)
+				{
 					selected_function = Cryptonight_hash_asm<1u, 0u>::template hash<cryptonight_monero_v8>;
+					selected_function = Cryptonight_hash_asm<1u, 0u>::template hash<cryptonight_pulse>;
+					selected_function = Cryptonight_hash_asm<1u, 0u>::template hash<cryptonight_electronero>;
+				}
 				else if(N == 2)
+				{
 					selected_function = Cryptonight_hash_asm<2u, 0u>::template hash<cryptonight_monero_v8>;
+					selected_function = Cryptonight_hash_asm<2u, 0u>::template hash<cryptonight_pulse>;
+					selected_function = Cryptonight_hash_asm<2u, 0u>::template hash<cryptonight_electronero>;
+				}
 			}
 			// supports only 1 thread per hash
 			if(N == 1 && selected_asm == "amd_avx")
