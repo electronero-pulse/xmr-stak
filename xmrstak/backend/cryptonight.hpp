@@ -36,8 +36,10 @@ constexpr uint32_t CRYPTONIGHT_HEAVY_ITER = 0x40000;
 
 constexpr uint32_t CRYPTONIGHT_MASARI_ITER = 0x40000;
 
+constexpr size_t CRYPTONIGHT_ELECTRONERO_MEMORY = 8 * 1024 * 1024;
 constexpr uint32_t CRYPTONIGHT_ELECTRONERO_ITER = 0x40000;
 
+constexpr size_t CRYPTONIGHT_PULSE_MEMORY = 8 * 1024 * 1024;
 constexpr uint32_t CRYPTONIGHT_PULSE_ITER = 0x40000;
 
 template<xmrstak_algo ALGO>
@@ -77,17 +79,15 @@ template<>
 inline constexpr size_t cn_select_memory<cryptonight_bittube2>() { return CRYPTONIGHT_HEAVY_MEMORY; }
 
 template<>
-inline constexpr size_t cn_select_memory<cryptonight_electronero>() { return CRYPTONIGHT_MEMORY; }
+inline constexpr size_t cn_select_memory<cryptonight_electronero>() { return CRYPTONIGHT_ELECTRONERO_MEMORY; }
 
 template<>
-inline constexpr size_t cn_select_memory<cryptonight_pulse>() { return CRYPTONIGHT_MEMORY; }
+inline constexpr size_t cn_select_memory<cryptonight_pulse>() { return CRYPTONIGHT_PULSE_MEMORY; }
 
 inline size_t cn_select_memory(xmrstak_algo algo)
 {
 	switch(algo)
 	{
-	case cryptonight_electronero:
-	case cryptonight_pulse:
 	case cryptonight_stellite:
 	case cryptonight_monero:
 	case cryptonight_monero_v8:
@@ -102,6 +102,10 @@ inline size_t cn_select_memory(xmrstak_algo algo)
 	case cryptonight_haven:
 	case cryptonight_heavy:
 		return CRYPTONIGHT_HEAVY_MEMORY;
+	case cryptonight_electronero:
+		return CRYPTONIGHT_ELECTRONERO_MEMORY;
+	case cryptonight_pulse:
+		return CRYPTONIGHT_PULSE_MEMORY;	
 	default:
 		return 0;
 	}
