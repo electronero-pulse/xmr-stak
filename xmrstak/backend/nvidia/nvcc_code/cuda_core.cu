@@ -310,7 +310,7 @@ __global__ void cryptonight_core_gpu_phase2_double( int threads, int bfactor, in
 	uint64_t bx1;
 	uint32_t sqrt_result;
 	uint64_t division_result;
-	if(ALGO == cryptonight_monero_v8 || ALGO == cryptonight_pulse)
+	if(ALGO == cryptonight_monero_v8 || ALGO == cryptonight_pulse || ALGO == cryptonight_electronero)
 	{
 		bx0 = ((uint64_t*)(d_ctx_b + thread * 12))[sub];
 		bx1 = ((uint64_t*)(d_ctx_b + thread * 12 + 4))[sub];
