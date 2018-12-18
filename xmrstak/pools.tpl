@@ -49,6 +49,9 @@ POOLCONF],
  *    cryptonight_bittube2
  *    cryptonight_haven
  *    cryptonight_heavy
+ *    # 8MiB scratchpad memory
+ *    cryptonight_pulse
+ *    cryptonight_electronero
  */
 
 "currency" : "CURRENCY",
